@@ -1,18 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
+  <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
+  <ToDoItemList :items="items" />
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent, onMounted, PropType, ref } from "vue";
+// import HelloWorld from "./components/HelloWorld.vue";
+import ToDoItemList from "./components/ToDoItemList.vue";
+import { ToDoItemsRepository } from "./models/ToDoItem";
 
-@Options({
+export default defineComponent({
   components: {
-    HelloWorld,
+    // HelloWorld,
+    ToDoItemList,
   },
-})
-export default class App extends Vue {}
+  setup() {
+    let items = ref([{ name: "initial", isDone: false }]);
+    ToDoItemsRepository.fetchItems().then((result) => {
+      console.log("------ called 1" + result.toString());
+      result?.forEach((i) => console.log("loaded ", i));
+      items.value = result ?? [];
+    });
+    // onMounted(() =>
+    // ToDoItemsRepository.fetchItems().then((result) => (items.value = result))
+    // );
+    return {
+      items,
+    };
+  },
+});
 </script>
 
 <style>
