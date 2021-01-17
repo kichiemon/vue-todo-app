@@ -1,5 +1,6 @@
 <template>
   <h2>ToDo Items</h2>
+  <div>store's count {{ counted }}</div>
   <div>
     <span>新しいタスク：</span>
     <input type="text" placeholder="new to do task" v-model="newToDoItemName" />
@@ -27,16 +28,15 @@ import {
   PropType,
   ref,
   reactive,
+  computed,
   toRefs,
   onMounted,
 } from "vue";
 import { ToDoItem } from "../models/ToDoItem";
-
-var craeted: ToDoItem[] = [];
+import { useStore } from "../store";
 
 interface State {
   newToDoItemName?: string;
-  todoItems: ToDoItem[];
 }
 export default defineComponent({
   props: {
@@ -46,19 +46,18 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { newToDoItemName, todoItems } = toRefs(
-      reactive<State>({ newToDoItemName: null, todoItems: [] })
+    const store = useStore();
+    const { newToDoItemName } = toRefs(
+      reactive<State>({ newToDoItemName: null })
     );
-    onMounted(() => {
-      props.items.forEach((i) => todoItems.value.push(i));
-    });
     return {
-      todoItems,
       newToDoItemName,
-      onClick: (i) => todoItems.value[i].toggle(),
+      counted: computed(() => store.state.todoItems.length),
+      todoItems: computed(() => store.state.todoItems),
+      onClick: (i) => store.commit("toggle", i),
       onClickAddNewToDoItem: (e) => {
         if (!newToDoItemName.value ?? newToDoItemName.value.length == 0) return;
-        todoItems.value.push(new ToDoItem(newToDoItemName.value, false));
+        store.commit("add", new ToDoItem(newToDoItemName.value, false));
         newToDoItemName.value = null;
       },
     };
