@@ -1,32 +1,31 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
-  <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
+  <div>ToDo is {{ todoItemCount }}</div>
   <ToDoItemList :items="items" />
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, PropType, ref } from "vue";
-// import HelloWorld from "./components/HelloWorld.vue";
+import { defineComponent, onMounted, PropType, ref, computed } from "vue";
 import ToDoItemList from "./components/ToDoItemList.vue";
 import { ToDoItemsRepository } from "./models/ToDoItem";
 
 export default defineComponent({
   components: {
-    // HelloWorld,
     ToDoItemList,
   },
   setup() {
-    let items = ref([{ name: "initial", isDone: false }]);
-    ToDoItemsRepository.fetchItems().then((result) => {
-      console.log("------ called 1" + result.toString());
-      result?.forEach((i) => console.log("loaded ", i));
-      items.value = result ?? [];
-    });
-    // onMounted(() =>
-    // ToDoItemsRepository.fetchItems().then((result) => (items.value = result))
-    // );
+    let items = ref([]);
+    const todoItemCount = computed(
+      () => items.value.filter((i) => !i.isDone).length
+    );
+    onMounted(() =>
+      ToDoItemsRepository.fetchItems().then((result) => {
+        result?.forEach((i) => console.log("loaded ", i));
+        items.value = result ?? [];
+      })
+    );
     return {
       items,
+      todoItemCount: todoItemCount,
     };
   },
 });
