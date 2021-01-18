@@ -1,6 +1,7 @@
 <template>
   <h2>ToDo Items</h2>
   <div>store's count {{ counted }}</div>
+  <div>ToDo Items {{ undoneItemsLength }}</div>
   <div>
     <span>新しいタスク：</span>
     <input type="text" placeholder="new to do task" v-model="newToDoItemName" />
@@ -8,9 +9,16 @@
       <button v-on:click="onClickAddNewToDoItem">登録する</button>
     </div>
   </div>
-  <div v-for="(item, k) in todoItems" :key="k">
+  <div
+    v-for="(item, k) in todoItems"
+    :key="item.id"
+    style="padding: 8px; margin: 24px; background: skyblue"
+  >
     <div>==================</div>
-    <div>{{ k + 1 }}個目</div>
+    <div>
+      {{ k + 1 }}個目
+      <button @click="() => onClickDelete(item.id)">削除する</button>
+    </div>
     <div>name: {{ item.name }}</div>
     <div>isDone {{ item.isDone }}</div>
     <div>
@@ -31,6 +39,7 @@ import {
   computed,
   toRefs,
   onMounted,
+  onBeforeUnmount,
 } from "vue";
 import { ToDoItem } from "../models/ToDoItem";
 import { useStore } from "../store";
@@ -50,14 +59,27 @@ export default defineComponent({
     const { newToDoItemName } = toRefs(
       reactive<State>({ newToDoItemName: null })
     );
+    onMounted(() => {
+      store.dispatch("bindTodos");
+    });
+    onBeforeUnmount(() => {
+      store.dispatch("unbindTodos");
+    });
     return {
       newToDoItemName,
-      counted: computed(() => store.state.todoItems.length),
-      todoItems: computed(() => store.state.todoItems),
+      counted: computed(() => store.state.todos.length),
+      todoItems: computed(() => store.state.todos),
+      undoneItemsLength: computed(
+        () => store.state.todos.filter((i) => !i.isDone).length
+      ),
       onClick: (i) => store.commit("toggle", i),
+      onClickDelete: (id) => store.commit("removeTodo", id),
       onClickAddNewToDoItem: (e) => {
         if (!newToDoItemName.value ?? newToDoItemName.value.length == 0) return;
-        store.commit("add", new ToDoItem(newToDoItemName.value, false));
+        store.commit("addTodo", {
+          itemName: newToDoItemName.value,
+          isDone: false,
+        });
         newToDoItemName.value = null;
       },
     };

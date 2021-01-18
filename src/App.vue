@@ -6,7 +6,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, PropType, ref, computed } from "vue";
 import ToDoItemList from "./components/ToDoItemList.vue";
-import { ToDoItemsRepository } from "./models/ToDoItem";
 
 export default defineComponent({
   components: {
@@ -17,12 +16,7 @@ export default defineComponent({
     const todoItemCount = computed(
       () => items.value.filter((i) => !i.isDone).length
     );
-    onMounted(() =>
-      ToDoItemsRepository.fetchItems().then((result) => {
-        result?.forEach((i) => console.log("loaded ", i));
-        items.value = result ?? [];
-      })
-    );
+
     return {
       items,
       todoItemCount: todoItemCount,
