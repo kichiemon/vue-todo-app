@@ -21,5 +21,6 @@ module.exports = {
   ],
   rules: {
     "no-unused-vars": "off",
+    "no-irregular-whitespace": "off",
   },
 };

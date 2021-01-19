@@ -41,6 +41,7 @@ import {
   onMounted,
   onBeforeUnmount,
 } from "vue";
+import { useRouter } from "vue-router";
 import { ToDoItem } from "../models/ToDoItem";
 import { useStore } from "../store";
 
@@ -51,11 +52,11 @@ export default defineComponent({
   props: {
     items: {
       type: Array as PropType<ToDoItem[]>,
-      required: true,
     },
   },
   setup(props) {
     const store = useStore();
+    const router = useRouter();
     const { newToDoItemName } = toRefs(
       reactive<State>({ newToDoItemName: null })
     );
@@ -81,6 +82,7 @@ export default defineComponent({
           isDone: false,
         });
         newToDoItemName.value = null;
+        router.push("/");
       },
     };
   },

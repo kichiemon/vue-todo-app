@@ -1,26 +1,44 @@
 <template>
-  <div>ToDo is {{ todoItemCount }}</div>
-  <ToDoItemList :items="items" />
+  <h1>Hello App!</h1>
+  <p>
+    <!-- use the router-link component for navigation. -->
+    <!-- specify the link by passing the `to` prop. -->
+    <!-- `<router-link>` will render an `<a>` tag with the correct `href` attribute -->
+    <router-link to="/">Go to Home</router-link>
+    <span></span>
+    <router-link to="/todos">Go to ToDos</router-link>
+  </p>
+  <!-- route outlet -->
+  <!-- component matched by the route will render here -->
+  <router-view v-slot="{ Component }">
+    <transition name="fade">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, PropType, ref, computed } from "vue";
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from "vue-router";
 import ToDoItemList from "./components/ToDoItemList.vue";
 
 export default defineComponent({
-  components: {
-    ToDoItemList,
-  },
   setup() {
-    let items = ref([]);
-    const todoItemCount = computed(
-      () => items.value.filter((i) => !i.isDone).length
-    );
+    onBeforeRouteLeave((to, from) => {
+      console.log("@@@@@@ called router");
+      const answer = window.confirm(
+        "Do you really want to leave? you have unsaved changes!"
+      );
+      if (!answer) return false;
+    });
 
-    return {
-      items,
-      todoItemCount: todoItemCount,
-    };
+    onBeforeRouteUpdate(async (to, from) => {
+      // only fetch the user if the id changed as maybe only the query or the hash changed
+      console.log("@@@@@@ called router 2");
+      if (to.params.id !== from.params.id) {
+        // userData.value = await fetchUser(to.params.id);
+      }
+    });
   },
 });
 </script>
