@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import { ToDoActionTypes } from "@/store/todo";
 import {
   defineComponent,
   onBeforeUpdate,
@@ -61,11 +62,9 @@ export default defineComponent({
       reactive<State>({ newToDoItemName: null })
     );
     onMounted(() => {
-      store.dispatch("bindTodos");
+      store.dispatch(ToDoActionTypes.BIND_TODO, undefined);
     });
-    onBeforeUnmount(() => {
-      store.dispatch("unbindTodos");
-    });
+    onBeforeUnmount(() => {});
     return {
       newToDoItemName,
       counted: computed(() => store.state.todos.length),
@@ -73,11 +72,11 @@ export default defineComponent({
       undoneItemsLength: computed(
         () => store.state.todos.filter((i) => !i.isDone).length
       ),
-      onClick: (i) => store.commit("toggle", i),
-      onClickDelete: (id) => store.commit("removeTodo", id),
+      onClick: (i) => store.dispatch(ToDoActionTypes.TOGGLE, i),
+      onClickDelete: (id) => store.dispatch(ToDoActionTypes.REMOVE, id),
       onClickAddNewToDoItem: (e) => {
         if (!newToDoItemName.value ?? newToDoItemName.value.length == 0) return;
-        store.commit("addTodo", {
+        store.dispatch(ToDoActionTypes.ADD, {
           itemName: newToDoItemName.value,
           isDone: false,
         });
