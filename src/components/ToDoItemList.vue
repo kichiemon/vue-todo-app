@@ -22,7 +22,7 @@
     <div>name: {{ item.name }}</div>
     <div>isDone {{ item.isDone }}</div>
     <div>
-      <button @click="() => onClick(k)">
+      <button @click="() => onClickToggle(k)">
         {{ item.isDone ? "to do" : "to done" }}
       </button>
     </div>
@@ -72,8 +72,11 @@ export default defineComponent({
       undoneItemsLength: computed(
         () => store.state.todos.filter((i) => !i.isDone).length
       ),
-      onClick: (i) => store.dispatch(ToDoActionTypes.TOGGLE, i),
-      onClickDelete: (id) => store.dispatch(ToDoActionTypes.REMOVE, id),
+      onClickToggle: (i) => {
+        console.log("@@@@@@@ called click toggle", i);
+        store.dispatch(ToDoActionTypes.TOGGLE, { indexOfItem: i });
+      },
+      onClickDelete: (id) => store.dispatch(ToDoActionTypes.REMOVE, { id: id }),
       onClickAddNewToDoItem: (e) => {
         if (!newToDoItemName.value ?? newToDoItemName.value.length == 0) return;
         store.dispatch(ToDoActionTypes.ADD, {
@@ -81,7 +84,6 @@ export default defineComponent({
           isDone: false,
         });
         newToDoItemName.value = null;
-        router.push("/");
       },
     };
   },

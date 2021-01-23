@@ -1,4 +1,4 @@
-import { ActionContext, ActionTree, Module } from "vuex";
+import { ActionContext, ActionTree, Module, MutationTree } from "vuex";
 import { db } from "../api/firebase";
 import { ToDoItem } from "@/models/ToDoItem";
 import { AugmentedActionContext } from "./actions";
@@ -11,25 +11,41 @@ export interface TodoState {
 
 /** Mutations */
 
-export const todoMutations = {
-  toggle(state, indexOfItem: number) {
+export enum ToDoMutationTypes {
+  TOGGLE = "TODO/TOGGLE",
+  ADD = "TODO/ADD",
+  REMOVE = "TODO/REMOVE",
+}
+export type ToDoMutations<S = State> = {
+  [ToDoMutationTypes.TOGGLE](state: S, payload: { indexOfItem: number }): void;
+  [ToDoMutationTypes.ADD](state: S, payload: { id: string }): void;
+  [ToDoMutationTypes.REMOVE](
+    state: S,
+    payload: { itemName: string; isDone: boolean }
+  ): void;
+};
+
+export const todoMutations: ToDoMutations = {
+  [ToDoMutationTypes.TOGGLE](state, { indexOfItem }) {
+    console.log(
+      ToDoMutationTypes.TOGGLE,
+      "@@ mutation called",
+      indexOfItem,
+      state.todos,
+      state.todos[indexOfItem]
+    );
     db.collection("todos")
       .doc(state.todos[indexOfItem].id)
       .set({ isDone: !state.todos[indexOfItem].isDone }, { merge: true });
   },
-  removeTodo(state, id) {
+  [ToDoMutationTypes.ADD](state, { id }) {
     db.collection("todos").doc(id).delete();
   },
-  addTodo(state, { itemName, isDone }) {
+  [ToDoMutationTypes.REMOVE](state, { itemName, isDone }) {
     const id = db.collection("todos").doc().id;
-    db.collection("todos").doc(id).set(
-      {
-        id: id,
-        name: itemName,
-        isDone: isDone,
-      },
-      { merge: true }
-    );
+    db.collection("todos")
+      .doc(id)
+      .set({ id: id, name: itemName, isDone: isDone }, { merge: true });
   },
 };
 
@@ -65,8 +81,9 @@ export const todoAction: ActionTree<State, State> & ToDoActions = {
     { state, commit },
     { indexOfItem }
   ): Promise<void> {
+    console.log(ToDoActionTypes.TOGGLE, "@@ called");
     if (state.todos.length < indexOfItem) return;
-    state.todos[indexOfItem].toggle();
+    commit(ToDoMutationTypes.TOGGLE, { indexOfItem: indexOfItem });
   },
   async [ToDoActionTypes.REMOVE]({ state, commit }, { id }): Promise<void> {},
   async [ToDoActionTypes.ADD](

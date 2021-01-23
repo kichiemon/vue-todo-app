@@ -13,9 +13,7 @@
   <!-- route outlet -->
   <!-- component matched by the route will render here -->
   <router-view v-slot="{ Component }">
-    <transition name="fade">
-      <component :is="Component" />
-    </transition>
+    <component :is="Component" />
   </router-view>
 </template>
 
@@ -47,5 +45,9 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+/* vue-router が勝手に付与してくれるclass */
+.router-link-active {
+  color: red;
 }
 </style>
