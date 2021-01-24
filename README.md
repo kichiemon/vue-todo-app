@@ -29,17 +29,17 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn serve --mode=dev
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn build --mode=dev
 ```
 
 ### Lints and fixes files
 ```
-yarn lint
+yarn format
 ```
 
 ### Customize configuration
