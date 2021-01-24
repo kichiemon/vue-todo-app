@@ -7,7 +7,13 @@ Vue.js base project structure
 - vuex v4
 - vue-router v4
 - firebase v8
-- GitHub Actions（auto deploy）
+- GitHub Actions（auto deploy to Firebase Hosting）
+
+## Points
+- using Vue.js v3 x TypeScript.
+- Vuex for TypeScript and implements type safe commit/dispatch/getter.
+- providing firebase config values by environment variables.
+- validating for authentication, by using firebase authentication and vue-router
 
 
 ## Project setup
