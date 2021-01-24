@@ -11,6 +11,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@storybook/addons": "^6.2.0-alpha.7",
+    "@storybook/core": "^6.2.0-alpha.7",
     "core-js": "^3.6.5",
     "es6-promise": "^4.2.8",
     "firebase": "^8.2.3",
