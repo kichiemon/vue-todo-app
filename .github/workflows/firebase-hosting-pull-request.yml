@@ -28,9 +28,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Build
-      - run: yarn build --mode=dev
+        run: yarn build --mode=dev
       - name: Firebase
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_VUE_JS_TODO_3AA7A }}'
