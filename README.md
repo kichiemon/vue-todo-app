@@ -1,3 +1,4 @@
+
 # vue-todo
 
 Vue.js base project structure
@@ -14,7 +15,12 @@ Vue.js base project structure
 - Vuex for TypeScript and implements type safe commit/dispatch/getter.
 - providing firebase config values by environment variables.
 - validating for authentication, by using firebase authentication and vue-router
+- GitHubAction auto deploy to Firebase Hosting
 
+
+
+![Deploy to Firebase Hosting on PR](https://github.com/kichiemon/vue-todo-app/workflows/Deploy%20to%20Firebase%20Hosting%20on%20PR/badge.svg)
+![Deploy to Firebase Hosting on merge](https://github.com/kichiemon/vue-todo-app/workflows/Deploy%20to%20Firebase%20Hosting%20on%20merge/badge.svg)
 
 ## Project setup
 ```
