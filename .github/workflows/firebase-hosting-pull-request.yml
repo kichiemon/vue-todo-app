@@ -29,6 +29,7 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Build
       - run: yarn build --mode=dev
+      - name: Firebase
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
