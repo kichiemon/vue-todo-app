@@ -1,5 +1,14 @@
 # vue-todo
 
+Vue.jsの基本構成を作ってみる
+
+- TypeScript
+- Vue.js v3
+- vuex v4（）
+- vue-router v4
+- firebase v8
+
+
 ## Project setup
 ```
 yarn install
