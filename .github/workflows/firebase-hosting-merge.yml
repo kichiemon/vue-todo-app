@@ -15,7 +15,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: yarn build --mode=dev
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: build
+        run: yarn build --mode=dev
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
