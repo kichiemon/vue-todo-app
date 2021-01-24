@@ -4,7 +4,7 @@ Vue.js base project structure
 
 - TypeScript
 - Vue.js v3
-- vuex v4（）
+- vuex v4
 - vue-router v4
 - firebase v8
 - GitHub Actions（auto deploy）
