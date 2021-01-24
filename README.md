@@ -5,6 +5,7 @@ Vue.js base project structure
 
 - TypeScript
 - Vue.js v3
+- Composition API Style
 - vuex v4
 - vue-router v4
 - firebase v8
