@@ -12,12 +12,7 @@ module.exports = {
     "plugin:vue/vue3-essential",
     "eslint:recommended",
     "@vue/typescript",
-    // "plugin:@typescript-eslint/recommended",
-    // "plugin:vue/vue3-recommended",
-    // "plugin:vue/recommended",
     "prettier",
-    "prettier/@typescript-eslint",
-    "prettier/vue",
   ],
   rules: {
     "no-unused-vars": "off",

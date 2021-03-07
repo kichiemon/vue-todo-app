@@ -34,14 +34,5 @@ router.beforeEach(async (to, from, next) => {
   else if (!currentUser) redirectToLogin();
   else {
     return next();
-    // const unsubscribe = await store
-    //   .dispatch(AuthActionTypes.BIND_AUTH_SUBSCRIBE, null)
-    //   .then((f) => {
-    //     const adminAuth = store.state.adminAuth;
-    //     if (adminAuth) next();
-    //     else redirectToLogin();
-    //     return f;
-    //   });
-    // unsubscribe();
   }
 });
