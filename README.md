@@ -28,6 +28,20 @@ Vue.js base project structure
 yarn install
 ```
 
+### setup env variables
+
+- create .env.dev
+
+```.env.dev
+VUE_APP_FIREBASE_API_KEY=hoge
+VUE_APP_FIREBASE_AUTH_DOMAIN=hoge
+VUE_APP_FIREBASE_PROJECT_ID=hoge
+VUE_APP_FIREBASE_STORAGE_BUCKET=hoge
+VUE_APP_FIREBASE_MESSAGING_SENDER_ID=hoge
+VUE_APP_FIREBASE_APP_ID=hoge
+VUE_APP_FIREBASE_DATABASE_URL=hoge
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve --mode=dev
