@@ -1,16 +1,8 @@
 //https://dev.to/3vilarthas/vuex-typescript-m4j
 
-import {
-  createStore,
-  Store as VuexStore,
-  CommitOptions,
-  DispatchOptions,
-} from "vuex";
-import { State, state } from "./state";
-import { Getters, getters } from "./getters";
-import { Mutations, mutations } from "./mutations";
-import { Actions } from "./actions";
-import { ToDoActions } from "./todo";
+import { Store as VuexStore, CommitOptions, DispatchOptions } from "vuex";
+import { Getters } from "./getters";
+import { Actions, Mutations, State } from "..";
 
 /**
 export const state = {

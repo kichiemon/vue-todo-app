@@ -1,8 +1,8 @@
-import { ActionContext, ActionTree, Module, MutationTree } from "vuex";
+import { ActionTree } from "vuex";
 import { db } from "../api/firebase";
 import { ToDoItem } from "@/models/ToDoItem";
-import { AugmentedActionContext } from "./actions";
-import { State } from "./state";
+import { AugmentedActionContext } from "./types/actions";
+import { State } from ".";
 
 export interface TodoState {
   todos: ToDoItem[];

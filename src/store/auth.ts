@@ -1,8 +1,7 @@
 import firebase from "firebase";
 import { ActionTree } from "vuex";
-import { AugmentedActionContext } from "./actions";
-import { MutationTypes } from "./mutations";
-import { State } from "./state";
+import { AugmentedActionContext } from "./types/actions";
+import { MutationTypes, State } from ".";
 
 interface AuthState {
   user: firebase.User | null;
